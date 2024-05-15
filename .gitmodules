@@ -1,3 +1,6 @@
 [submodule "WebScan-worker"]
 	path = WebScan-worker
 	url = git@github.com:RomDmitriy/WebScan-worker.git
+[submodule "WebScan-frontend"]
+	path = WebScan-frontend
+	url = git@github.com:RomDmitriy/WebScan-frontend.git
