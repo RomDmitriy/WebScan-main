@@ -9,14 +9,65 @@ services:
     ports:
       - 80:80
     environment:
-    - NGINX_HOST=webscan-proj.net
+    - NGINX_HOST=localhost
     - NGINX_PORT=80
 
   frontend:
-    build: ./WebScan-frontend
+    build: ../frontend
 
   worker:
     build: ./WebScan-worker
     deploy:
       mode: replicated
-      replicas: 3
+      replicas: 1
+    ports:
+      - "1323:1323"
+
+  postgres:
+    image: postgres:16.3
+    environment:
+      POSTGRES_DB: "webscan"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+      PGDATA: "/var/lib/postgresql/data/pgdata"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    logging:
+      driver: none
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d webscan"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 4G
+
+  pgadmin:
+    image: dpage/pgadmin4:8.7
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "admin@yandex.ru"
+      PGADMIN_DEFAULT_PASSWORD: "admin"
+      GUNICORN_ACCESS_LOGFILE: /dev/null
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    ports:
+      - "5050:80"
+    logging:
+      driver: none
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 1G
+
+volumes:
+  db-data:
+  pgadmin-data:
