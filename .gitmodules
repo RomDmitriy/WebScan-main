@@ -4,6 +4,3 @@
 [submodule "WebScan-frontend"]
 	path = WebScan-frontend
 	url = git@github.com:RomDmitriy/WebScan-frontend.git
-[submodule "WebScan-tests"]
-	path = WebScan-tests
-	url = git@github.com:RomDmitriy/WebScan-tests.git
