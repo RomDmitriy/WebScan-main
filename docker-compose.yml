@@ -32,8 +32,6 @@ services:
       - .env
     ports:
       - "1320:1320"
-    expose:
-      - 1320
     depends_on:
       - postgres
 
@@ -45,8 +43,6 @@ services:
       - .env
     ports:
       - "1321:1321"
-    expose:
-      - 1321
     depends_on:
       - postgres
 
@@ -58,8 +54,6 @@ services:
       - .env
     ports:
       - "1322:1322"
-    expose:
-      - 1322
     depends_on:
       - postgres
 
