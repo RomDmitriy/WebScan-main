@@ -5,6 +5,7 @@ services:
     image: nginx:1.25.5
     volumes:
     - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    restart: unless-stopped
     ports:
       - 80:80
       - 8000:8000
@@ -23,6 +24,7 @@ services:
       - AUTH_TRUST_HOST=true
     env_file:
       - .env
+    restart: unless-stopped
 
   worker_1:
     build: ./WebScan-worker
@@ -34,6 +36,7 @@ services:
       - "1320:1320"
     depends_on:
       - postgres
+    restart: unless-stopped
 
   worker_2:
     build: ./WebScan-worker
@@ -45,6 +48,7 @@ services:
       - "1321:1321"
     depends_on:
       - postgres
+    restart: unless-stopped
 
   worker_3:
     build: ./WebScan-worker
@@ -56,6 +60,7 @@ services:
       - "1322:1322"
     depends_on:
       - postgres
+    restart: unless-stopped
 
   postgres:
     image: postgres:16.3
